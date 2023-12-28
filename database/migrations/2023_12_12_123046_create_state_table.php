@@ -18,7 +18,8 @@ class CreateStateTable extends Migration
         Schema::create('state', function (Blueprint $table) {
             $table->Increments('state_id');
             $table->json('state_name');
-            // $table->index('state_name');
+            $table->unsignedInteger('country_id');
+    $table->foreign('country_id')->references('id')->on('countries');
         });
 
         Schema::enableForeignKeyConstraints();

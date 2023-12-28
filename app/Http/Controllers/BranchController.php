@@ -14,33 +14,33 @@ class BranchController extends Controller
     }
 
   function branchValidate(Request $request){
-        $validated = $request->validate([
-            
+       return $request->validate([
+
             'branch_name' => 'required|string|max:255',
             'address' => 'required|string',
             'city_id' => 'required|integer',
             'zip_code' => 'required|string|max:20',
             'manager_id' => 'required|integer',
         ]);
-        return $validated;
+
     }
    public function branchCreate(Request $request){
-       
+
         Branch::create(BranchController::branchValidate($request));
         return redirect()->route('branches.index')->with('success', 'Branch created successfully!');
     }
 
  public   function branchUpdate(Request $request, $branchId){
         $branch = Branch::findOrFail($branchId);
-    
+
         $fields = ['branch_name', 'address', 'city_id', 'zip_code', 'manager_id'];
-    
+
         foreach ($fields as $field) {
             if ($request->filled($field)) {
                 $branch->$field = BranchController::branchValidate($request);
             }
         }
-    
+
         $branch->save();
         return redirect()->route('profiles.index')->with('success', 'Branch updated successfully!');
     }
@@ -55,5 +55,5 @@ class BranchController extends Controller
     return redirect()->route('profiles.index')->with('success', 'Branch deleted successfully!');
 
    }
-    
+
 }

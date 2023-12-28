@@ -18,6 +18,7 @@ class CreateAccountTable extends Migration
         Schema::create('account', function (Blueprint $table) {
             $table->Increments('account_id');
             $table->decimal('balance');
+            $table->string('account_name');
             $table->enum('account_type', ['savings', 'checking', 'credit'])->comment('ENUM(savings, checking, credit)');
             $table->unsignedInteger('currency_id');
             $table->foreign('currency_id')->references('currency_id')->on('currency');
@@ -26,6 +27,7 @@ class CreateAccountTable extends Migration
             $table->index('account_id');
             $table->index('account_type');
             $table->index('customer_id');
+            $table->index('account_name');
         });
 
         Schema::enableForeignKeyConstraints();
