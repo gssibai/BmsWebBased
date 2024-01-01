@@ -22,10 +22,10 @@ class CreateProfileTable extends Migration
             $table->text('address');
             $table->char('phone_no');
             $table->string('email')->unique();
-            $table->unsignedInteger('city_id');
-            $table->foreign('city_id')->references('city_id')->on('city');
-            $table->enum('permission', ['customer, employer, manager']);
-            $table->enum('status', ['active, disabled, blocked']);
+            // $table->unsignedInteger('city_id');
+            // $table->foreign('city_id')->references('city_id')->on('city');
+            $table->string('permission')->default('customer');
+            $table->string('status')->default('active');
             $table->string('passport_no')->unique();
             $table->char('password');
             $table->index(['first_name', 'last_name']);
@@ -33,6 +33,9 @@ class CreateProfileTable extends Migration
             $table->index('permission');
             $table->index('status');
             $table->index('passport_no');
+            $table->rememberToken();
+            $table->timestamps();
+
         });
 
         Schema::enableForeignKeyConstraints();

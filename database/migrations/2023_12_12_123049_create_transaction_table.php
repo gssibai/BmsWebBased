@@ -18,7 +18,6 @@ class CreateTransactionTable extends Migration
         Schema::create('transaction', function (Blueprint $table) {
             $table->Increments('transaction_id');
             $table->decimal('amount')->comment('NOT NULLABLE');
-            //$table->dateTime('transaction_date');
             $table->enum('transaction_type', ['deposit', 'withdrawal', 'transfer'])->comment('ENUM(deposit, withdrawal, transfer)');
             $table->unsignedInteger('branch_id');
             $table->foreign('branch_id')->references('branch_id')->on('branch');
@@ -26,14 +25,15 @@ class CreateTransactionTable extends Migration
             $table->unsignedInteger('account_id');
             $table->foreign('account_id')->references('account_id')->on('account');
             $table->text('description')->nullable();
-            $table->timestamp('added_on')->default(time());
+            $table->timestamps();
             $table->index('transaction_id');
-            $table->index('transaction_date');
+            // $table->index('added_on');
             $table->index('transaction_type');
             $table->index('branch_id');
             $table->index('account_id');
             // $table->index('description');
         });
+        
 
         Schema::enableForeignKeyConstraints();
     }

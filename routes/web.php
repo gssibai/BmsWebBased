@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InfoUserController;
+use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AddUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', [HomeController::class, 'home']);
+    // Route::get('/', [HomeController::class, 'home']);
+	Route::get('/', [UserController::class, 'index'])->name('user-management');
 	Route::get('dashboard', function () {
 		return view('dashboard');
 	})->name('dashboard');
@@ -40,11 +44,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('rtl', function () {
 		return view('rtl');
 	})->name('rtl');
+	Route::get('user-management', [UserController::class, 'index'])->name('user-management');
 
-	Route::get('user-management', function () {
-		return view('laravel-examples/user-management');
-	})->name('user-management');
-
+	// Route::get('user-management', function () {
+	// 	return view('laravel-examples/user-management');
+	// })->name('user-management');
+	
 	Route::get('tables', function () {
 		return view('tables');
 	})->name('tables');
@@ -62,18 +67,36 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('sign-up');
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
-	Route::get('/user-profile', [InfoUserController::class, 'create']);
-	Route::post('/user-profile', [InfoUserController::class, 'store']);
+	// Route::get('/user-profile', [InfoUserController::class, 'create']);
+	// Route::post('/user-profile', [InfoUserController::class, 'store']);
+	//New user profile routes
+	
+	Route::get('/user-profile', [ProfileController::class,'create']);
+	Route::post('/user-profile', [ProfileController::class,'profileCreate']);
     Route::get('/login', function () {
 		return view('dashboard');
 	})->name('sign-up');
+
+	Route::post('/add-user', [AddUserController::class, 'store'])->name('addregister.store');
+Route::get('/add-user', [AddUserController::class, 'create'])->name('addregister.create');
+Route::delete('/delete-user/{id}', [UserController::class, 'delete'])->name('delete.user');
+Route::delete('/delete-all-users-except-logged-in', [UserController::class, 'deleteAllExceptLoggedIn'])->name('delete.all.except.loggedin');
+
 });
 
+// Route::get('add-user', function () {
+// 	return view('laravel-examples.add-user');
+// })->name('add-user');
 
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [RegisterController::class, 'create']);
-    Route::post('/register', [RegisterController::class, 'store']);
+	Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+    Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
+	
+
+	//  Route::get('/register', [LocationController::class, 'getCountries']);
+
+	
     Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/session', [SessionsController::class, 'store']);
 	Route::get('/login/forgot-password', [ResetController::class, 'create']);
@@ -86,3 +109,5 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+// Route::get('/import-countries', [LocationController::class, 'createCountries']);
+

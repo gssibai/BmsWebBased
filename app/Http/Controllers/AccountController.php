@@ -29,7 +29,7 @@ class AccountController extends Controller
     public function accountUpdate(Request $request, $accountId){
             $account = Account::findOrFail($accountId);
             if($request->filled('account_name')){
-                $account->account_name = ProfileController::profileValidation($request);
+                $account->account_name = AccountController::AccountValidation($request);
             }
             $account->save();
             return redirect()->route('accounts.index')->with('success', 'Account updated successfully!');

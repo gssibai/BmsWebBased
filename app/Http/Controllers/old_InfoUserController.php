@@ -20,9 +20,13 @@ class InfoUserController extends Controller
     {
 
         $attributes = request()->validate([
-            'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
-            'phone'     => ['max:50'],
+            'first_name' => ['required', 'max:50'],
+            'last_name' => ['required', 'max:50'],
+            'phone_no' => ['required', 'max:20'],
+            'permission' => 'required|string|in:customer,employer,manager',
+            'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
+            'password' => ['required', 'min:5', 'max:20'],
+            'passport_no' => 'unique:profiles',
             'location' => ['max:70'],
             'about_me'    => ['max:150'],
         ]);

@@ -66,36 +66,75 @@
               </div>
             </div>
             <div class="card-body">
-              <form role="form text-left">
+              <form method="POST" action="{{ route('register.store') }}" role="form text-left">
+                @csrf
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="email-addon">
-                  @error('name')
-                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                  @enderror
+                    <input type="text" name="first_name" class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="first-name-addon">
+                    @error('first_name')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
-                  @error('email')
-                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                  @enderror
+                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="last-name-addon">
+                    @error('last_name')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
-                  @error('password')
-                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                  @enderror
+                    <input type="text" name="address" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="address-addon">
+                    @error('address')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="phone_no" class="form-control" placeholder="Phone Number" aria-label="Phone Number" aria-describedby="phone-no-addon">
+                    @error('phone_no')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <select name="permission" class="form-control">
+                        <option value="customer">Customer</option>
+                        <option value="employer">Employer</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                    @error('permission')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                    @error('email')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                    @error('password')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="passport_no" class="form-control" placeholder="Passport Number" aria-label="Passport Number" aria-describedby="passport-no-addon">
+                    @error('passport_no')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-check form-check-info text-left">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                  <label class="form-check-label" for="flexCheckDefault">
-                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                  </label>
+                    <input class="form-check-input" type="checkbox" name="agreement" value="1" id="flexCheckDefault" checked>
+                    <label class="form-check-label" for="flexCheckDefault">
+                        I agree to the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                    </label>
+                    @error('agreement')
+                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
                 </div>
                 <p class="text-sm mt-3 mb-0">Already have an account? <a href="javascript:;" class="text-dark font-weight-bolder">Sign in</a></p>
-              </form>
+            </form>
+            
             </div>
           </div>
         </div>

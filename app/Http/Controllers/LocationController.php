@@ -6,21 +6,28 @@ use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
-
+use File;
 class LocationController extends Controller
 {
     /** Creating functions */
-    public function createCountries() {
-        $countries = json_decode(file_get_contents(storage_path('countries.json')), true);
-        foreach ($countries as $country) {
-            Country::create([
-                'country_code' => $country['country_code'],
-                'country_name' => $country['country_name'],
-                // Add other necessary data
-            ]);
-        }
-        return response()->json('Countries imported successfully');
-    }
+    // public function createCountries() {
+    //     try {
+    //         $countriesJson = File::get(storage_path('app/countries.json'));
+    //         $countries = json_decode($countriesJson, true);
+
+    //         foreach ($countries as $country) {
+    //             Country::create([
+    //                 'country_code' => $country['country_code'],
+    //                 'country_name' => $country['country_name'],
+    //                 // Add other necessary data
+    //             ]);
+    //         }
+
+    //         return response()->json('Countries imported successfully');
+    //     } catch (\Exception $e) {
+    //         return $e;
+    //     }
+    // }
 
 
     public function createStates() {
@@ -51,15 +58,23 @@ class LocationController extends Controller
 
     /** Retrieving functions */
 
+    // public function getCountries() {
+    //     try {
+    //         $countries = Country::all();
+    //         return CountryResource::collection($countries);
+    //     } catch (\Exception $e) {
+    //         return response()->json('Error retrieving countries', 500);
+    //     }
+    // }
+
     public function getCountries() {
         try {
-            $countries = Country::all();
-            return CountryResource::collection($countries);
+            $countries = Country::orderBy('country_name', 'asc')->get();
+            return view('auth.register', compact('countries')); // Pass sorted countries to the register view
         } catch (\Exception $e) {
             return response()->json('Error retrieving countries', 500);
         }
     }
-
     public function getStates() {
         try {
             $states = State::with('country')->get();
