@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
 
         // DB::table('users')->insert([
         //     'id' => 3,
-        //     'name' => 'aaann',
+        //     'name' => '0aaann',
         //     'email' => 'admin@aaann.com',
         //     'password' => Hash::make('secret'),
         //     'created_at' => now(),

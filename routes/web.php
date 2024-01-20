@@ -74,14 +74,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/user-profile', [ProfileController::class,'create']);
 	Route::post('/user-profile', [ProfileController::class,'profileCreate']);
     Route::get('/login', function () {
-		return view('dashboard');
+		return view('/');
 	})->name('sign-up');
 
 	Route::post('/add-user', [AddUserController::class, 'store'])->name('addregister.store');
 Route::get('/add-user', [AddUserController::class, 'create'])->name('addregister.create');
 Route::delete('/delete-user/{id}', [UserController::class, 'delete'])->name('delete.user');
 Route::delete('/delete-all-users-except-logged-in', [UserController::class, 'deleteAllExceptLoggedIn'])->name('delete.all.except.loggedin');
-
+Route::delete('/delete-all-selected', [UserController::class, 'deleteSelected'])->name('delete.all.selected');
+Route::post('/sort-users', [UserController::class, 'sortUsers'])->name('sort.users');
+Route::get('/update-users', [UserController::class, 'editUsers'])->name('update.users');
+Route::post('/update-users', [UserController::class, 'updateUsersData'])->name('update.users.data');
 });
 
 // Route::get('add-user', function () {

@@ -16697,6 +16697,7 @@ hr.horizontal.gray-light {
     /* height: calc(100vh - 360px); */
     overflow: auto;
 }
+
 .navbar-vertical.navbar-expand-xs > [class*="container"] {
     align-items: stretch;
     flex-direction: column;
